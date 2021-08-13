@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #contenedor{
+            width: 600px;
+            height: 2000px;
+            background: gray;
+            padding: 5px;
+        }
+        .tarjeta{
+            background: white;
+           
+        }
+        .tarjeta ul li{
+            list-style: none;
+        }
+        .tarjeta ul li:nth-child(1){
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+    
+   
+
+      <div id="contenedor">
+          
+      </div>
+
+
+    <script>
+
+const content = document.querySelector('#contenedor');
+
+function cargarUsuarios(){
+    fetch('usuarios.json')
+        .then(respuesta => respuesta.json()) //Indicamos el formato en que se desea obtener la información
+        .then(usuarios => {
+            usuarios.forEach(usuario => {
+                const div = document.createElement('div');
+                div.classList.add('tarjeta');
+                div.innerHTML += `
+                    <ul>
+                      <li>id: ${usuario.id}</li>
+                      <li>nombre: ${usuario.name}</li>
+                      <li>email: ${usuario.email}</li>
+                      <li>compania: ${usuario.company.name}</li>
+                  </ul>
+
+
+                `;
+                content.appendChild(div);                
+            });
+        }) // Aquí mostramos dicha información
+        .catch(error => console.log('Hubo un error : ' + error.message))
+}
+
+cargarUsuarios();
+
+
+    </script>
+</body>
+</html>
